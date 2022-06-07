@@ -73,16 +73,16 @@ namespace neptune_hidapi.net
     }
     public class NeptuneControllerAxesState
     {
-        private Dictionary<NeptuneControllerAxis, Int32> _axisState;
+        private Dictionary<NeptuneControllerAxis, Int16> _axisState;
 
-        public NeptuneControllerAxesState(Dictionary<NeptuneControllerAxis, int> axisState)
+        public NeptuneControllerAxesState(Dictionary<NeptuneControllerAxis, Int16> axisState)
         {
             _axisState = axisState;
         }
 
         internal NeptuneControllerAxesState(SDCInput input)
         {
-            _axisState = new Dictionary<NeptuneControllerAxis, int>();
+            _axisState = new Dictionary<NeptuneControllerAxis, Int16>();
 
             _axisState[NeptuneControllerAxis.LeftStickX] = input.lthumb_x;
             _axisState[NeptuneControllerAxis.LeftStickY] = input.lthumb_y;
@@ -114,11 +114,11 @@ namespace neptune_hidapi.net
             _axisState[NeptuneControllerAxis.Q4] = input.q4;
         }
 
-        public Int32 this[NeptuneControllerAxis axis]
+        public Int16 this[NeptuneControllerAxis axis]
         {
             get
             {
-                return _axisState.ContainsKey(axis) ? _axisState[axis] : 0;
+                return _axisState.ContainsKey(axis) ? _axisState[axis] : (Int16)0;
             }
         }
 
