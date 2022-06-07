@@ -112,6 +112,13 @@ namespace neptune_hidapi.net
             _configureTask = ConfigureLoop();
         }
 
-
+        public Task CloseAsync() =>  Task.Run(() => Close());
+        public void Close()
+        {
+            if (_hidDevice.IsDeviceValid)
+                _hidDevice.EndRead();
+            _hidDevice.Dispose();
+            _active = false;
+        }
     }
 }
