@@ -39,11 +39,16 @@ namespace neptune_hidapi.net
             _buttonState[NeptuneControllerButton.BtnDpadUp]         = (input.buttons0 & (ushort)SDCButton0.BTN_DPAD_UP)         == (ushort)SDCButton0.BTN_DPAD_UP;
             _buttonState[NeptuneControllerButton.BtnDpadLeft]       = (input.buttons0 & (ushort)SDCButton0.BTN_DPAD_LEFT)       == (ushort)SDCButton0.BTN_DPAD_LEFT;
             _buttonState[NeptuneControllerButton.BtnDpadRight]      = (input.buttons0 & (ushort)SDCButton0.BTN_DPAD_RIGHT)      == (ushort)SDCButton0.BTN_DPAD_RIGHT;
-
+            
             _buttonState[NeptuneControllerButton.BtnMenu]           = (input.buttons0 & (ushort)SDCButton0.BTN_MENU)            == (ushort)SDCButton0.BTN_MENU;
             _buttonState[NeptuneControllerButton.BtnSteam]          = (input.buttons0 & (ushort)SDCButton0.BTN_STEAM)           == (ushort)SDCButton0.BTN_STEAM;
             _buttonState[NeptuneControllerButton.BtnOptions]        = (input.buttons0 & (ushort)SDCButton0.BTN_OPTIONS)         == (ushort)SDCButton0.BTN_OPTIONS;
             _buttonState[NeptuneControllerButton.BtnL5]             = (input.buttons0 & (ushort)SDCButton0.BTN_L5)              == (ushort)SDCButton0.BTN_L5;
+
+            _buttonState[NeptuneControllerButton.BtnL1]             = (input.buttons0 & (ushort)SDCButton0.BTN_L1)              == (ushort)SDCButton0.BTN_L1;
+            _buttonState[NeptuneControllerButton.BtnL2]             = (input.buttons0 & (ushort)SDCButton0.BTN_L2)              == (ushort)SDCButton0.BTN_L2;
+            _buttonState[NeptuneControllerButton.BtnR1]             = (input.buttons0 & (ushort)SDCButton0.BTN_R1)              == (ushort)SDCButton0.BTN_R1;
+            _buttonState[NeptuneControllerButton.BtnR2]             = (input.buttons0 & (ushort)SDCButton0.BTN_R2)              == (ushort)SDCButton0.BTN_R2;
 
             _buttonState[NeptuneControllerButton.BtnLStickPress]    = (input.buttons1 & (ushort)SDCButton1.BTN_LSTICK_PRESS)    == (ushort)SDCButton1.BTN_LSTICK_PRESS;
             _buttonState[NeptuneControllerButton.BtnLPadTouch]      = (input.buttons1 & (ushort)SDCButton1.BTN_LPAD_TOUCH)      == (ushort)SDCButton1.BTN_LPAD_TOUCH;

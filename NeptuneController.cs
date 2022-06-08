@@ -29,16 +29,17 @@ namespace neptune_hidapi.net
 
         private void OnInputReceived(HidDeviceInputReceivedEventArgs e)
         {
-            var start = DateTime.Now;
-            SDCInput input = ((byte[])e.Buffer).ToStructure<SDCInput>();
-            NeptuneControllerInputState state = new NeptuneControllerInputState(input);
-            if(OnControllerInputReceived != null)
-                OnControllerInputReceived(new NeptuneControllerInputEventArgs(state));
-            var dur = DateTime.Now - start;
-        }
+            if (e.Buffer[0] == 1)
+            {
+                SDCInput input = e.Buffer.ToStructure<SDCInput>();
+                NeptuneControllerInputState state = new NeptuneControllerInputState(input);
+                if (OnControllerInputReceived != null)
+                    OnControllerInputReceived(new NeptuneControllerInputEventArgs(state));
+            }
+            else
+            {
 
-        private void ProcessInput(object arg)
-        {
+            }
         }
 
         private async Task<bool> SetLizardMode(bool enabled)
@@ -75,7 +76,7 @@ namespace neptune_hidapi.net
 
         private async Task ConfigureLoop()
         {
-            while(_active)
+            while (_active)
             {
                 await SetLizardMode(LizardModeEnabled);
                 await Task.Delay(250);
@@ -120,7 +121,7 @@ namespace neptune_hidapi.net
             _configureTask = ConfigureLoop();
         }
 
-        public Task CloseAsync() =>  Task.Run(() => Close());
+        public Task CloseAsync() => Task.Run(() => Close());
         public void Close()
         {
             if (_hidDevice.IsDeviceValid)

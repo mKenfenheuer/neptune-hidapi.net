@@ -67,6 +67,7 @@
     <Compile Include="NeptuneControllerEnums.cs" />
     <Compile Include="NeptuneControllerInputEventArgs.cs" />
     <Compile Include="NeptuneControllerInputState.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\StructUtils.cs" />
   </ItemGroup>

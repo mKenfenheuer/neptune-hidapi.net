@@ -67,8 +67,8 @@ namespace neptune_hidapi.net.Hid
         BTN_LSTICK_PRESS    = 0b01000000,
         BTN_LPAD_TOUCH      = 0b00001000,
         BTN_LPAD_PRESS      = 0b00000010,
-        BTN_RPAD_TOUCH      = 0b00010000,
-        BTN_RPAD_PRESS      = 0b00000100,
+        BTN_RPAD_PRESS      = 0b00010000,
+        BTN_RPAD_TOUCH      = 0b00000100,
         BTN_R5              = 0b00000001,
     }
 
