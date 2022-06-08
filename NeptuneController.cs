@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace neptune_hidapi.net
@@ -28,7 +29,13 @@ namespace neptune_hidapi.net
 
         private void OnInputReceived(object sender, HidDeviceInputReceivedEventArgs e)
         {
-            SDCInput input = e.Buffer.ToStructure<SDCInput>();
+            var thread = new Thread(new ParameterizedThreadStart(ProcessInput));
+            thread.Start(e.Buffer);
+        }
+
+        private void ProcessInput(object arg)
+        {
+            SDCInput input = ((byte[])arg).ToStructure<SDCInput>();
             NeptuneControllerInputState state = new NeptuneControllerInputState(input);
             OnControllerInputReceived?.Invoke(this, new NeptuneControllerInputEventArgs(state));
         }
