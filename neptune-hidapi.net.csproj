@@ -52,10 +52,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="hidapi.net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\hidapi.net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,19 +71,17 @@
     <Compile Include="Util\StructUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hidapi.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="hidapi.net.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="lib\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\hidapi.net\hidapi.net\hidapi.net.csproj">
+      <Project>{9b860078-9ad1-45dd-8f85-e6d806e5dc9b}</Project>
+      <Name>hidapi.net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

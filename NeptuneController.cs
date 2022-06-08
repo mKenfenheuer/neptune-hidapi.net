@@ -19,25 +19,26 @@ namespace neptune_hidapi.net
 
         public bool LizardModeEnabled { get; set; }
         public string SerialNumber { get; private set; }
-        public event EventHandler<NeptuneControllerInputEventArgs> OnControllerInputReceived;
+        public Func<NeptuneControllerInputEventArgs, Task> OnControllerInputReceived;
 
         public NeptuneController()
         {
             _hidDevice = new HidDevice(_vid, _pid, 64);
-            _hidDevice.OnInputReceived += OnInputReceived;
+            _hidDevice.OnInputReceived = input => Task.Run(() => OnInputReceived(input));
         }
 
-        private void OnInputReceived(object sender, HidDeviceInputReceivedEventArgs e)
+        private void OnInputReceived(HidDeviceInputReceivedEventArgs e)
         {
-            var thread = new Thread(new ParameterizedThreadStart(ProcessInput));
-            thread.Start(e.Buffer);
+            var start = DateTime.Now;
+            SDCInput input = ((byte[])e.Buffer).ToStructure<SDCInput>();
+            NeptuneControllerInputState state = new NeptuneControllerInputState(input);
+            if(OnControllerInputReceived != null)
+                OnControllerInputReceived(new NeptuneControllerInputEventArgs(state));
+            var dur = DateTime.Now - start;
         }
 
         private void ProcessInput(object arg)
         {
-            SDCInput input = ((byte[])arg).ToStructure<SDCInput>();
-            NeptuneControllerInputState state = new NeptuneControllerInputState(input);
-            OnControllerInputReceived?.Invoke(this, new NeptuneControllerInputEventArgs(state));
         }
 
         private async Task<bool> SetLizardMode(bool enabled)
