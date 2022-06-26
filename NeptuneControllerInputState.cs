@@ -55,6 +55,7 @@ namespace neptune_hidapi.net
             _buttonState[NeptuneControllerButton.BtnLPadPress]      = (input.buttons1 & (ushort)SDCButton1.BTN_LPAD_PRESS)      == (ushort)SDCButton1.BTN_LPAD_PRESS;
             _buttonState[NeptuneControllerButton.BtnRPadPress]      = (input.buttons1 & (ushort)SDCButton1.BTN_RPAD_TOUCH)      == (ushort)SDCButton1.BTN_RPAD_TOUCH;
             _buttonState[NeptuneControllerButton.BtnRPadTouch]      = (input.buttons1 & (ushort)SDCButton1.BTN_RPAD_PRESS)      == (ushort)SDCButton1.BTN_RPAD_PRESS;
+            _buttonState[NeptuneControllerButton.BtnR5]             = (input.buttons1 & (ushort)SDCButton1.BTN_R5)              == (ushort)SDCButton1.BTN_R5;
 
             _buttonState[NeptuneControllerButton.BtnRStickPress]    = (input.buttons2 & (ushort)SDCButton2.BTN_RSTICK_PRESS)    == (ushort)SDCButton2.BTN_RSTICK_PRESS;
 
