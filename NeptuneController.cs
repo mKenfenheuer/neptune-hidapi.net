@@ -17,7 +17,8 @@ namespace neptune_hidapi.net
         private Task _configureTask;
         private bool _active = false;
 
-        public bool LizardModeEnabled { get; set; }
+        public bool LizardMouseEnabled { get; set; }
+        public bool LizardButtonsEnabled { get; set; }
         public string SerialNumber { get; private set; }
         public Func<NeptuneControllerInputEventArgs, Task> OnControllerInputReceived;
 
@@ -42,28 +43,34 @@ namespace neptune_hidapi.net
             }
         }
 
-        private async Task<bool> SetLizardMode(bool enabled)
+        private async Task<bool> SetLizardMode(bool mouse, bool buttons)
         {
             try
             {
-                if (!enabled)
+                if (!mouse)
                 {
                     //Disable mouse emulation
                     byte[] data = new byte[] { 0x87, 0x03, 0x08, 0x07 };
                     await _hidDevice.RequestFeatureReportAsync(data);
-
-                    //Disable keyboard/mouse button emulation
-                    data = new byte[] { 0x81, 0x00 };
+                }
+                else
+                {
+                    //Enable mouse emulation
+                    byte[] data = new byte[] { 0x8e, 0x00 };
                     await _hidDevice.RequestFeatureReportAsync(data);
+                }
+
+                if (!buttons)
+                {
+                    //Disable keyboard/mouse button emulation
+                    byte[] data = new byte[] { 0x81, 0x00 };
+                    await _hidDevice.RequestFeatureReportAsync(data);
+
                 }
                 else
                 {
                     //Enable keyboard/mouse button emulation
                     byte[] data = new byte[] { 0x85, 0x00 };
-                    await _hidDevice.RequestFeatureReportAsync(data);
-
-                    //Enable mouse emulation
-                    data[0] = 0x8e;
                     await _hidDevice.RequestFeatureReportAsync(data);
                 }
             }
@@ -78,7 +85,7 @@ namespace neptune_hidapi.net
         {
             while (_active)
             {
-                await SetLizardMode(LizardModeEnabled);
+                await SetLizardMode(LizardMouseEnabled, LizardButtonsEnabled);
                 await Task.Delay(250);
             }
         }
