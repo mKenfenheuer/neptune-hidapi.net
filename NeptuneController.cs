@@ -44,18 +44,18 @@ namespace neptune_hidapi.net
             }
         }
 
-        private double MapValue(double a, double b, double c) => a / b* c;
+        private double MapValue(double a, double b, double c) => a / b * c;
 
-        public async Task<bool> SetHaptic(byte amount)
+        public async Task<bool> SetHaptic(byte position, ushort amplitude, ushort period, ushort count)
         {
             SDCHapticPacket haptic = new SDCHapticPacket();
-            if (amount > 0)
-            {
-                amount = (byte) MapValue(amount, 0xff, 0x85);
-                haptic.amplitude = (ushort)(0x0000 + 0x85 - amount + 0x10);
-                haptic.period = 0x0005;
-                haptic.cunt = 1;
-            }
+
+            haptic.packet_type = 0x8f;
+            haptic.len = 0x07;
+            haptic.position = position;
+            haptic.amplitude = amplitude;
+            haptic.period = period;
+            haptic.count = count;
 
             byte[] data = GetHapticDataBytes(haptic);
 

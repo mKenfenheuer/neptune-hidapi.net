@@ -137,6 +137,6 @@ namespace neptune_hidapi.net.Hid
         public byte position; //  = 1;
         public UInt16 amplitude;
         public UInt16 period;
-        public UInt16 cunt;
+        public UInt16 count;
     }
 }
