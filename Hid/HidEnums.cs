@@ -128,4 +128,15 @@ namespace neptune_hidapi.net.Hid
         public Int16 lpad_pressure; //0x38
         public Int16 rpad_pressure;	//0x3A
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SDCHapticPacket
+    {
+        public byte packet_type; // = 0x8f;
+        public byte len; //  = 0x07;
+        public byte position; //  = 1;
+        public UInt16 amplitude;
+        public UInt16 period;
+        public UInt16 cunt;
+    }
 }

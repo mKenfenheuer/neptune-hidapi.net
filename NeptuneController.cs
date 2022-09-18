@@ -4,6 +4,7 @@ using neptune_hidapi.net.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,37 @@ namespace neptune_hidapi.net
             {
 
             }
+        }
+
+        private double MapValue(double a, double b, double c) => a / b* c;
+
+        public async Task<bool> SetHaptic(byte amount)
+        {
+            SDCHapticPacket haptic = new SDCHapticPacket();
+            if (amount > 0)
+            {
+                amount = (byte) MapValue(amount, 0xff, 0x85);
+                haptic.amplitude = (ushort)(0x0000 + 0x85 - amount + 0x10);
+                haptic.period = 0x0005;
+                haptic.cunt = 1;
+            }
+
+            byte[] data = GetHapticDataBytes(haptic);
+
+            await _hidDevice.RequestFeatureReportAsync(data);
+
+            return true;
+        }
+
+        private byte[] GetHapticDataBytes(SDCHapticPacket packet)
+        {
+            int size = Marshal.SizeOf(packet);
+            byte[] arr = new byte[size];
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(packet, ptr, false);
+            Marshal.Copy(ptr, arr, 0, size);
+            Marshal.FreeHGlobal(ptr);
+            return arr;
         }
 
         private async Task<bool> SetLizardMode(bool mouse, bool buttons)
